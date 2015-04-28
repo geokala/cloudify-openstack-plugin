@@ -228,11 +228,26 @@ def create(nova_client, neutron_client, **kwargs):
     ctx.logger.debug(
         "server.create() server after transformations: {0}".format(server))
 
-    # First parameter is 'self', skipping
+    # Get the parameter names and default values, dropping self
     params_names = inspect.getargspec(nova_client.servers.create).args[1:]
+    params_default_values = list(inspect.getargspec(
+        nova_client.servers.create).defaults)
 
-    params_default_values = inspect.getargspec(
-        nova_client.servers.create).defaults
+    # As arguments with defaults must follow arguments without, we reverse the
+    # args and defaults lists so that we can combine them to get all the
+    # correct default values
+    params_names.reverse()
+    params_default_values.reverse()
+
+    # We can't reject required parameters, and we have a check already for
+    # them earlier in this function, TODO: but it should probably use the same
+    # logic as we have here with a more comprehensive rewrite of this function
+    for i in params_names[len(params_default_values):]:
+        # This is technically wrong as they are required and do not have a
+        # default, even one set to None- but see the TODO above.
+        params_default_values.append(None)
+
+    # Now form the dict of acceptable parameters
     params = dict(itertools.izip(params_names, params_default_values))
 
     # Fail on unsupported parameters
