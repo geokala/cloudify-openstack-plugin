@@ -5,7 +5,7 @@ Feature: Testing nodecellar on an openstack manager
       And I have a deployment called nodecellar from openstack-nova-net-blueprint.yaml from a checkout of 3.4rc1 on https://github.com/cloudify-cosmo/cloudify-nodecellar-example.git with inputs from template openstack-nodecellar-inputs
 
   @openstack
-  @3.3.1
+  @3.4rc1
   @nodecellar
   @check_url
   Scenario: Check nodecellar is up
@@ -13,13 +13,13 @@ Feature: Testing nodecellar on an openstack manager
     Then I find the nodecellar page contains the word nodecellar
 
   @openstack
-  @3.3.1
+  @3.4rc1
   @nodecellar
   Scenario: I run all of the tests even if one of them fails
      Then I fail a step
 
   @openstack
-  @3.3.1
+  @3.4rc1
   @nodecellar
   @check_monitoring
   Scenario: Check nodecellar has monitoring data on the manager
