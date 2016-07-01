@@ -23,6 +23,6 @@ Feature: Testing nodecellar on an openstack manager
   @nodecellar
   @check_monitoring
   Scenario: Check nodecellar has monitoring data on the manager
-   Given I have opened the influxdb port on the manager security group
+   Given I have opened the influxdb port on the openstack manager security group
     When I try to get monitoring data for the nodecellar deployment
     Then I see some monitoring data
