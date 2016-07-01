@@ -2,6 +2,7 @@ Feature: Testing nodecellar on an openstack manager
   Background:
     Given I have installed Cloudify CLI version 3.4rc1 from github
       And I have a manager created from openstack-manager-blueprint.yaml from a checkout of 3.4rc1 on https://github.com/cloudify-cosmo/cloudify-manager-blueprints.git with inputs from template openstack-bootstrap-inputs-3.4rc1
+      And I have uploaded the plugin http://repository.cloudifysource.org/org/cloudify3/wagons/cloudify-openstack-plugin/1.4/cloudify_openstack_plugin-1.4-py27-none-linux_x86_64-centos-Core.wgn to the manager
       And I have a deployment called nodecellar from openstack-nova-net-blueprint.yaml from a checkout of 3.4rc1 on https://github.com/cloudify-cosmo/cloudify-nodecellar-example.git with inputs from template openstack-nodecellar-inputs
 
   @openstack
