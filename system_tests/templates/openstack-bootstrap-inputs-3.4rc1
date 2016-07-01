@@ -17,3 +17,6 @@ manager_port_name: '{{resources_prefix}}-manager-port'
 agents_user: '{{openstack.centos_agents_user}}'
 ssh_key_filename: 'keys/cloudify-manager-kp.pem'
 agent_private_key_path: 'keys/cloudify-agent-kp.pem'
+management_subnet_dns_nameservers:
+  - 8.8.8.8
+  - 8.8.4.4
