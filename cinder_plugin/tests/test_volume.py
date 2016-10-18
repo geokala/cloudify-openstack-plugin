@@ -15,6 +15,7 @@
 
 import contextlib
 import mock
+import pytest
 import unittest
 
 from cloudify import mocks as cfy_mocks
@@ -39,6 +40,8 @@ class TestCinderVolume(unittest.TestCase):
     def tearDown(self):
         current_ctx.clear()
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_create_new(self):
         volume_name = 'fake volume name'
         volume_description = 'fake volume'
@@ -83,6 +86,8 @@ class TestCinderVolume(unittest.TestCase):
             volume.VOLUME_OPENSTACK_TYPE,
             ctx_m.instance.runtime_properties[OPENSTACK_TYPE_PROPERTY])
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_create_use_existing(self):
         volume_id = '00000000-0000-0000-0000-000000000000'
 
@@ -113,6 +118,8 @@ class TestCinderVolume(unittest.TestCase):
             volume.VOLUME_OPENSTACK_TYPE,
             ctx_m.instance.runtime_properties[OPENSTACK_TYPE_PROPERTY])
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_delete(self):
         volume_id = '00000000-0000-0000-0000-000000000000'
         volume_name = 'test-volume'
@@ -142,6 +149,8 @@ class TestCinderVolume(unittest.TestCase):
         self.assertTrue(OPENSTACK_NAME_PROPERTY
                         not in ctx_m.instance.runtime_properties)
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_attach(self):
         volume_id = '00000000-0000-0000-0000-000000000000'
         server_id = '11111111-1111-1111-1111-111111111111'
@@ -286,20 +295,28 @@ class TestCinderVolume(unittest.TestCase):
             expect_cleanup=expect_cleanup
         )
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_cleanup_after_waituntilstatus_throws_recoverable_error(self):
         err = cfy_exc.RecoverableError('Some recoverable error')
         self._test_cleanup_after_waituntilstatus_throws(err, True)
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_cleanup_after_waituntilstatus_throws_any_not_nonrecov_error(self):
         class ArbitraryNonRecoverableException(Exception):
             pass
         err = ArbitraryNonRecoverableException('An exception')
         self._test_cleanup_after_waituntilstatus_throws(err, True)
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_cleanup_after_waituntilstatus_lets_nonrecov_errors_pass(self):
         err = cfy_exc.NonRecoverableError('Some non recoverable error')
         self._test_cleanup_after_waituntilstatus_throws(err, False)
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_cleanup_after_waituntilstatus_times_out(self):
         self._test_cleanup__after_attach_fails(
             volume_ctx_mgr=mock.patch.object(
@@ -310,6 +327,8 @@ class TestCinderVolume(unittest.TestCase):
             expected_err_cls=cfy_exc.RecoverableError
         )
 
+    @pytest.mark.internal
+    @pytest.mark.unit
     def test_detach(self):
         volume_id = '00000000-0000-0000-0000-000000000000'
         server_id = '11111111-1111-1111-1111-111111111111'
